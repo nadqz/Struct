@@ -86,10 +86,10 @@ main ()
 
   int peta[myPosisi.lebarPeta][myPosisi.panjangPeta] = {
     {8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 5, 5, 1, 1, 1, 1, 1},
-    {8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 1, 1, 1, 1, 1},
-    {8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 2, 1, 5, 5, 1, 1, 1, 1, 1},
+    {8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 5, 5, 1, 1, 1, 1, 1},
+    {8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 8, 8, 8, 8, 8, 8, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1},
     {1, 1, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 1, 1, 1},
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 1, 1, 1},
     {1, 1, 1, 5, 5, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1},
@@ -104,9 +104,7 @@ main ()
   };
 
 
-  int arrowKey = 0;
-  myPosisi.koordinat = peta[myPosisi.koordinatY][myPosisi.koordinatX];
-
+  int arrowKey;
   /*
      #define KEY_UP 72
      #define KEY_DOWN 80
@@ -118,10 +116,46 @@ main ()
     {
       // Input Keyboard
       cout << "Masukan arrow key ";
-      arrowKey = getch ();
-      cout << "Arrow key yang dimasukan " << arrowKey << "\n";
-
-      for (int i = 0; i < myPosisi.lebarPeta; i++)
+      arrowKey = (getch());
+      cout << "Arrow key yang dimasukan " << myPosisi.koordinat << "\n";
+      
+      // Aturan menggerakkan karakter ke atas
+      if (arrowKey == KEY_UP
+	  && peta[myPosisi.koordinatY - 1][myPosisi.koordinatX] < 4)
+	{
+	  myPosisi.koordinatY -= 1;
+	  myPosisi.koordinatY < 0 ? myPosisi.koordinatY =
+	    0 : myPosisi.koordinatY;
+	}
+      else if (arrowKey == KEY_DOWN
+	       && peta[myPosisi.koordinatY + 1][myPosisi.koordinatX] < 4)
+	{
+	  myPosisi.koordinatY += 1;
+	  myPosisi.koordinatY > 15 ? myPosisi.koordinatY =
+	    15 : myPosisi.koordinatY;
+	}
+      else if (arrowKey == KEY_LEFT
+	       && peta[myPosisi.koordinatY][myPosisi.koordinatX - 1] < 4)
+	{
+	  myPosisi.koordinatX -= 1;
+	  myPosisi.koordinatX < 0 ? myPosisi.koordinatX =
+	    0 : myPosisi.koordinatX;
+	}
+      else if (arrowKey == KEY_RIGHT
+	       && peta[myPosisi.koordinatY][myPosisi.koordinatX + 1] < 4)
+	{
+	  myPosisi.koordinatX += 1;
+	  myPosisi.koordinatX > 19 ? myPosisi.koordinatX =
+	    19 : myPosisi.koordinatX;
+	}
+      else
+	{
+	  // nothing to do
+	};
+	
+	myPosisi.koordinat = peta[myPosisi.koordinatY][myPosisi.koordinatX];
+	system("cls");
+	for (int i = 0; i < myPosisi.lebarPeta; i++)
 	{
 	  for (int j = 0; j < myPosisi.panjangPeta; j++)
 	    {
@@ -171,56 +205,24 @@ main ()
 	    }
 	  cout << "\n";
 
-	}
-
-      // Aturan menggerakkan karakter ke atas
-      if (arrowKey == KEY_UP
-	  && peta[myPosisi.koordinatY - 1][myPosisi.koordinatX] < 4)
-	{
-	  myPosisi.koordinatY -= 1;
-	  myPosisi.koordinatY < 0 ? myPosisi.koordinatY =
-	    0 : myPosisi.koordinatX;
-	}
-      else if (arrowKey == KEY_DOWN
-	       && peta[myPosisi.koordinatY + 1][myPosisi.koordinatX] < 4)
-	{
-	  myPosisi.koordinatY += 1;
-	  myPosisi.koordinatY > 15 ? myPosisi.koordinatY =
-	    15 : myPosisi.koordinatX;
-	}
-      else if (arrowKey == KEY_LEFT
-	       && peta[myPosisi.koordinatY][myPosisi.koordinatX - 1] < 4)
-	{
-	  myPosisi.koordinatX -= 1;
-	  myPosisi.koordinatX < 0 ? myPosisi.koordinatX =
-	    0 : myPosisi.koordinatX;
-	}
-      else if (arrowKey == KEY_RIGHT
-	       && peta[myPosisi.koordinatY][myPosisi.koordinatX + 1] < 4)
-	{
-	  myPosisi.koordinatX += 1;
-	  myPosisi.koordinatX > 19 ? myPosisi.koordinatX =
-	    19 : myPosisi.koordinatX;
-	}
-      else
-	{
-	  // nothing to do
 	};
+
     
     // summon pokemon   
     if (myPosisi.koordinat == 2 || myPosisi.koordinat == 3) {
         int chance;
         srand(time(NULL));
         chance = rand() % 10;
-        
+//        cout << chance << endl;
         if (chance < 3) {
             int choice;
-            system("clear");
+            
             cout << "\n\nyou found pokemon!\n";
 			cout << "what will you do?\n1) fight\n2) run\n";
 			cout << "decision: ";
 			cin >> choice;
 			
+//			system("clear");
 			if (choice == 1) {
 			    myPoke.Bulbasaur.baseATK = 100;
 			    myPoke.Bulbasaur.hPoint = 200;
@@ -232,6 +234,7 @@ main ()
 			    
 			    cout << "Bulbasaur: " << endl;
 			    cout << "\tHealth Point: " << myPoke.Bulbasaur.hPoint - myPoke.Pikachu.baseATK << endl;
+			    getch();
 			}
         }
     }
